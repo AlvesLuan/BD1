@@ -1,4 +1,4 @@
-# DROP DATABASE Empresa;
+-- DROP DATABASE Empresa;
 
 CREATE DATABASE	if not exists Empresa;
 use Empresa;
@@ -31,11 +31,11 @@ CREATE TABLE if not exists TRABALHA_EM(
 	FCPF char(11) NOT NULL,
     PNR int NOT NULL,
     Horas decimal(3,1) NOT NULL,
-    primary key(FCPF, PNR),
-    foreign key(FCPF) references FUNCIONARIO(CPF) 
+    primary key(FCPF, PNR), #cada atributo referencia a sua tabela
+    foreign key(FCPF) references FUNCIONARIO(CPF) #referenciou um
     ON DELETE CASCADE 
     ON UPDATE CASCADE,
-    foreign key(PNR) references PROJETO(ProjNumero) 
+    foreign key(PNR) references PROJETO(ProjNumero) #referenciou oto
     ON DELETE CASCADE
     ON UPDATE CASCADE
 );
@@ -49,6 +49,26 @@ CREATE TABLE if not exists LOCALIZACAO_DEP(
     ON UPDATE CASCADE
 );
 
+CREATE TABLE if not exists PROJETO(
+	ProjNome varchar(15) NOT NULL,
+    ProjNumero int NOT NULL,
+    ProjLocal varchar(15),
+    primary key (ProjNumero),
+    UNIQUE(ProjNome)
+);
+
+ALTER TABLE  PROJETO ADD COLUMN DNum int NOT NULL;
+
+ALTER TABLE PROJETO ADD CONSTRAINT FK
+foreign key (DNum) references DEPARTAMENTO(DNumero)
+on delete cascade
+on update cascade;
+
+-- ALTER TABLE PROJETO DROP foreign key FK;
+-- ALTER TABLE PROJETO DROP COLUMN DNum;
+
+
 show tables;
+desc PROJETO
 -- DROP TABLE FUNCIONARIO;
 -- DROP TABLE DEPARTAMENTO;
