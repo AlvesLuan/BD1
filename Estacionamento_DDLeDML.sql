@@ -100,3 +100,19 @@ insert into Tb_Estaciona (cod, TB_patio_num , TB_veiculo_placa ) values (8, 4,'J
 insert into Tb_Estaciona (cod, TB_patio_num , TB_veiculo_placa ) values (9, 3,'JEJ-2020');
 insert into Tb_Estaciona (cod, TB_patio_num , TB_veiculo_placa ) values (10, 2,'JJJ-4420');
 select * from Tb_Estaciona;
+
+
+-- e. Exiba a placa e o nome dos donos de todos os veiculos.alter
+select distinct c.Nome, v.placa
+from TB_CLiente as c, tb_veiculo as V
+where c.cpf = v.tb_cliente_cpf;
+
+-- f. Exiba o CPF e o nome do cliente que possui o veiculo de placa “JJJ-2020”.
+select distinct c.Nome, c.CPF
+from TB_CLiente as c, tb_veiculo as v
+where placa = 'JJJ-20201';
+
+-- g. exiba a placa e a cor do veiculo que possui p cpdogp de estacionamento 1
+select v.placa, v.cor
+from tb_veiculo as v, tb_estaciona as e
+where v.placa = e.tb_veiculo_placa and e.cod = 1;
