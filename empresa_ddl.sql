@@ -138,3 +138,38 @@ where v.cor = 'preto' and v.tb_cliente_cpf = c.cpf;
 select e.cod
 from tb_estaciona as e
 where e.tb_veiculo_placa = 'JJJ-2020';
+
+-- l. Exiba o nome do cliente que possui o veículo cujo código do estacionamento é 2.
+SELECT c.nome
+from tb_cliente as c, tb_estaciona as e, tb_veiculo as V
+where e.cod = 2 and e.tb_veiculo_placa = v.placa and
+v.tb_cliente_cpf = c.cpf;
+
+-- m. Exiba o CPF do cliente que possui o veículo cujo código do estacionamento é 3.
+SELECT c.cpf
+from tb_cliente as c, tb_estaciona as e, tb_veiculo as V
+where e.cod = 3 and e.tb_veiculo_placa = v.placa and
+v.tb_cliente_cpf = c.cpf;
+
+-- n. Exiba a descrição do modelo do veículo cujo código do estacionamento é 2.
+SELECT m.descricao
+from tb_modelo as m, tb_estaciona as e, tb_veiculo as V
+where e.cod = 2 and e.tb_veiculo_placa = v.placa and
+v.tb_modelo_codmod = m.codmod;
+
+-- o. Exiba a placa, o nome dos donos e a descrição dos os modelos de todos os veículos.
+select v.placa, c.nome, m.descricao
+from tb_modelo as m, tb_cliente as c, tb_veiculo as v
+where v.tb_modelo_codmod = m.codmod and v.tb_cliente_cpf;
+
+-- p. Mostre o nome dos clientes e a placa de seus veículos que estacionaram no pátio 1, 2 ou 3.
+select v.placa, c.nome
+from tb_estaciona as e, tb_cliente as c, tb_veiculo as v
+where tb_patio_num in (1,2,3) and
+e.tb_veiculo_placa = v.placa and v.tb_cliente_cpf = c.cpf;
+
+-- q. Mostre as placas de veículos cujo código do estacionamento é 2 
+-- e as placas de veículos cujo código do estacionamento é 3.
+select v.placa
+from tb_estaciona as e, tb_veiculo as v
+where e.cod in (2,3) and e.tb_veiculo_placa = v.placa;
