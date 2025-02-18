@@ -1,98 +1,140 @@
--- DROP DATABASE Empresa;
+-- drop database estacionamento;
 
-CREATE DATABASE	if not exists Empresa;
-use Empresa;
+create database estacionamento;
+use estacionamento;
 
-CREATE TABLE if not exists FUNCIONARIO(
-	PNome varchar(15) NOT NULL,
-    CPF char(15) NOT NULL primary key,
-    DataNasc Char(10),
-    Logra varchar(30),
-    Sexo char check(Sexo in ('M' , 'F')),
-    Salario decimal(10,2),
-    CPF_Supervisor char(12),
-    Dnr int
-    -- primary key (CPF)
+create table TB_cliente(
+cpf varchar (11) ,
+nome varchar (60),
+dtNasc date,
+primary key (cpf)
 );
-insert funcionario  (PNome,CPF,Sexo,Salario,CPF_Supervisor,Dnr) value ('Alice','99988777707','F', 25000,'98765432168', 4);
-insert funcionario value ('Joice','45345345376','31-07-1972','av Lucas Obes','F', 25000,'33344555587', 5);
-insert funcionario value ('André','98798798733','29-03-1969','rua timbira','M', 25000,'98765432168', 4);
-insert funcionario value ('Jorge','8886555576','10-11-1937','rua do hirto','M', 55000,'33344555587', 1); 
-update funcionario set DataNasc = '16-03-1997' where cpf = 99988777707;
 
-CREATE TABLE DEPARTAMENTO(
-	DNOME varchar(10) NOT NULL,
-    DNUMERO INTEGER NOT NULL,
-    GERCPF CHAR(11),
-    GERDATINIC CHAR(9),
-    primary key (DNUMERO),
-    UNIQUE (DNOME),
-    foreign key(GERCPF) REFERENCES FUNCIONARIO(CPF) 
-    ON DELETE CASCADE 
-    ON UPDATE CASCADE
+create table TB_Modelo (
+codMod int primary key,
+descricao varchar (45)
 );
-insert DEPARTAMENTO values ('Pesquisa', 5, '33344555587', '22-05-1988' );
-insert DEPARTAMENTO values ('Administração', 4, '98765432168', '01-01-1995' );
-insert DEPARTAMENTO values ('Matriz', 1, '8886555576', '21-06-1981' );
 
-CREATE TABLE if not exists TRABALHA_EM(
-	FCPF char(11) NOT NULL,
-    PNR int NOT NULL,
-    Horas decimal(3,1) NOT NULL,
-    primary key(FCPF, PNR), #cada atributo referencia a sua tabela
-    foreign key(FCPF) references FUNCIONARIO(CPF) #referenciou um
-    ON DELETE CASCADE 
-    ON UPDATE CASCADE,
-    foreign key(PNR) references PROJETO(ProjNumero) #referenciou oto
-    ON DELETE CASCADE
-    ON UPDATE CASCADE
+
+create table TB_veiculo(
+placa varchar (8) primary key,
+TB_Modelo_codMod int,
+TB_cliente_cpf varchar(11),
+cor varchar (45),
+Ano varchar (4),
+foreign key (TB_cliente_cpf) references TB_cliente (CPF)ON DELETE CASCADE
+ON UPDATE CASCADE,
+foreign key (TB_Modelo_codMod) references TB_Modelo (codMod) ON DELETE CASCADE
+ON UPDATE CASCADE
 );
-insert Trabalha_em values ('12345678966', 1, 32.5);
-insert Trabalha_em values ('12345678966', 2, 7.5); 
-insert Trabalha_em values ('66688444476', 3, 40);
 
-CREATE TABLE if not exists LOCALIZACAO_DEP(
-	DNumero int NOT NULL,
-    DLocal varchar(15) NOT NULL,
-    primary key (DNumero, DLocal),
-    foreign key (DNumero) references DEPARTAMENTO(DNumero) 
-    ON DELETE CASCADE 
-    ON UPDATE CASCADE
+
+
+create table TB_patio (
+ num int primary key,
+ capacidade int
 );
-insert LOCALIZACAO_DEP values(1, 'São Paulo');
-insert LOCALIZACAO_DEP values(4, 'Mauá');
-insert LOCALIZACAO_DEP values(5, 'Santo André');
-insert LOCALIZACAO_DEP values(5, 'Itu');
-insert LOCALIZACAO_DEP values(5, 'São Paulo');
 
-CREATE TABLE if not exists PROJETO(
-	ProjNome varchar(15) NOT NULL,
-    ProjNumero int NOT NULL,
-    ProjLocal varchar(15),
-    primary key (ProjNumero),
-    UNIQUE(ProjNome)
+create table TB_estaciona (
+cod integer auto_increment,
+TB_patio_num int,
+TB_veiculo_placa varchar (8),
+dtEntrada varchar (10),
+dtsaida varchar (10),
+hsentrada varchar (10),
+hssaida varchar (10),
+-- primary key (TB_patio_num, TB_veiculo_placa),
+primary key (cod),
+foreign key (TB_patio_num) references TB_patio (num) ON DELETE cascade
+ON UPDATE CASCADE,
+foreign key (TB_veiculo_placa) references TB_veiculo (placa) ON DELETE CASCADE
+ON UPDATE CASCADE
 );
-insert PROJETO values ('Produtox', 1, 'Santo André', 5);
-insert PROJETO values ('Produtoy', 2, 'itu', 5);
-insert PROJETO values ('Produtoz', 3, 'São Paulo', 5);
-insert PROJETO values ('Informatização', 10, 'Mauá', 4);
-insert PROJETO values ('Reorganização', 20, 'São Paulo', 1);
-insert PROJETO values ('NovosBenefícios', 30, 'Mauá', 4);
 
-ALTER TABLE  PROJETO ADD COLUMN DNum int NOT NULL;
+insert into TB_Cliente values('11111111111', 'mirosmar', '1954-12-07');
+insert into TB_Cliente values('11111111112', 'José', '1977-11-07');
+insert into TB_Cliente values('11111111113', 'Camila', '1984-10-07');
+insert into TB_Cliente values('11111111114', 'Alex', '1953-09-07');
+insert into TB_Cliente values('11111111115', 'Maria', '1964-12-07');
+insert into TB_Cliente values('11111111116', 'Dardania', '1988-08-07');
+insert into TB_Cliente values('11111111117', 'Joaquim', '1967-07-07');
+insert into TB_Cliente values('11111111118', 'Joana', '1989-07-07');
+insert into TB_Cliente values('11111111119', 'Aline', '1995-05-07');
+insert into TB_Cliente values('11111111199', 'Eliandro', '1995-12-07');
+select * from TB_Cliente;
 
-ALTER TABLE PROJETO ADD CONSTRAINT FK
-foreign key (DNum) references DEPARTAMENTO(DNumero)
-on delete cascade
-on update cascade;
-
--- ALTER TABLE PROJETO DROP foreign key FK;
--- ALTER TABLE PROJETO DROP COLUMN DNum;
+insert into TB_Modelo value(1, 'Familar');
+insert into TB_Modelo value(2, 'Esportivo');
+insert into TB_Modelo value(3, 'Trucks');
+insert into TB_Modelo value(4, 'Sedan');
+select * from TB_Modelo;
 
 
+insert into TB_Veiculo values ('JJJ-2020',1 , '11111111111', 'Prata', 2000);
+insert into TB_Veiculo values ('JJJ-2022',2 , '11111111112', 'Cinza', 2007);
+insert into TB_Veiculo values ('JJJ-4420',3 , '11111111113', 'Preto', 2010);
+insert into TB_Veiculo values ('JEJ-2020',4 , '11111111114', 'Vermelho', 2011);
+insert into TB_Veiculo values ('JLJ-2020',1 , '11111111115', 'Cinza', 2009);
+insert into TB_Veiculo values ('JJE-2020',2 , '11111111111', 'Prata', 2015);
+insert into TB_Veiculo values ('JEG-1010',1 , '11111111116', 'Azul',2013);
+insert into TB_Veiculo values ('JJH-2050',1 , '11111111117', 'Preto', 2013);
+insert into TB_Veiculo values ('EJJ-3020',3 , '11111111118', 'Amarelo', 2013);
+insert into TB_Veiculo values ('JKJ-6020',1 , '11111111119', 'Prata', 2012);
+insert into TB_Veiculo values ('MJJ-2027',4 , '11111111199', 'Azul', 2007);
+select * from TB_Veiculo;
+
+insert into TB_Patio value (1, 100);
+insert into TB_Patio value (2, 100);
+insert into TB_Patio value (3, 200);
+insert into TB_Patio value (4, 250);
+select * from TB_Patio;
 
 
-show tables;
-desc PROJETO
--- DROP TABLE FUNCIONARIO;
--- DROP TABLE DEPARTAMENTO;
+insert into Tb_Estaciona (cod, TB_patio_num , TB_veiculo_placa ) values (1, 1,'JJJ-2020');
+insert into Tb_Estaciona (cod, TB_patio_num , TB_veiculo_placa ) values (2, 3,'MJJ-2027');
+insert into Tb_Estaciona (cod, TB_patio_num , TB_veiculo_placa ) values (3, 4,'JKJ-6020');
+insert into Tb_Estaciona (cod, TB_patio_num , TB_veiculo_placa ) values (4, 4,'EJJ-3020');
+insert into Tb_Estaciona (cod, TB_patio_num , TB_veiculo_placa ) values (5, 3,'JJH-2050');
+insert into Tb_Estaciona (cod, TB_patio_num , TB_veiculo_placa ) values (6, 2,'JEG-1010');
+insert into Tb_Estaciona (cod, TB_patio_num , TB_veiculo_placa ) values (7, 1,'JJE-2020');
+insert into Tb_Estaciona (cod, TB_patio_num , TB_veiculo_placa ) values (8, 4,'JLJ-2020');
+insert into Tb_Estaciona (cod, TB_patio_num , TB_veiculo_placa ) values (9, 3,'JEJ-2020');
+insert into Tb_Estaciona (cod, TB_patio_num , TB_veiculo_placa ) values (10, 2,'JJJ-4420');
+select * from Tb_Estaciona;
+
+
+-- e. Exiba a placa e o nome dos donos de todos os veiculos.alter
+select distinct c.Nome, v.placa
+from TB_CLiente as c, tb_veiculo as V
+where c.cpf = v.tb_cliente_cpf;
+
+-- f. Exiba o CPF e o nome do cliente que possui o veiculo de placa “JJJ-2020”.
+select distinct c.Nome, c.CPF
+from TB_CLiente as c, tb_veiculo as v
+where placa = 'JJJ-2020';
+
+-- g. exiba a placa e a cor do veiculo que possui p cpdogp de estacionamento 1
+select v.placa, v.cor
+from tb_veiculo as v, tb_estaciona as e
+where v.placa = e.tb_veiculo_placa and e.cod = 1;
+
+-- h. Exiba a placa, o ano do veículo e a descrição de seu modelo, se ele possuir ano a partir de 2000.  ;
+select v.placa, v.ano, m.descricao
+from tb_veiculo as V, tb_modelo as M
+where v.ano >= 2000 and v.tb_modelo_codmod = m.codmod;
+
+-- i. Liste todos os nomes dos clientes que possuem carro de modelo 1.
+select c.nome
+from tb_cliente as C, tb_veiculo as V
+where v.tb_modelo_codmod = 1 and
+v.tb_cliente_cpf = c.cpf;
+
+-- j. Liste os nomes dos clientes que possuem veículos de cor Preto.
+select c.nome
+from tb_cliente as C, tb_veiculo as V
+where v.cor = 'preto' and v.tb_cliente_cpf = c.cpf;
+
+-- k. Liste todos os estacionamentos do veículo de placa “JJJ-2020”.
+select e.cod
+from tb_estaciona as e
+where e.tb_veiculo_placa = 'JJJ-2020';
