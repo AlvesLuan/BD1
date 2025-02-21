@@ -38,3 +38,15 @@ from Cargo C inner join funcionario F on C.CodCargo = F.CodCargo;
 select F.Nomefuncionario, C.NomeCargo
 from Cargo C, Funcionario F 
 where C.CodCargo = F.CodCargo;
+
+select F.NomeFuncionario, C.NomeCargo
+from Funcionario F left outer join Cargo C on C.CodCargo = F.CodCargo;
+select F.NomeFuncionario, C.NomeCargo
+from Funcionario F right outer join Cargo C on C.CodCargo = F.CodCargo;
+
+-- full join:
+(select F.NomeFuncionario, C.NomeCargo
+from Funcionario F right outer join Cargo C on C.CodCargo = F.CodCargo)
+UNION
+(select F.nomeFuncionario, c.CodCargo 
+from funcionario F right outer join Cargo C on C.CodCargo = F.codCargo);
