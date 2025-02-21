@@ -29,5 +29,12 @@ select * from Cargo;
 select * from funcionario;
 
 select * from cargo C cross join funcionario F;
-
+select * from cargo C, funcionario F;
 select nomeFuncionario, nomeCargo from cargo C cross join funcionario F;
+
+select F.Nomefuncionario, C.NomeCargo
+from Cargo C inner join funcionario F on C.CodCargo = F.CodCargo;
+
+select F.Nomefuncionario, C.NomeCargo
+from Cargo C, Funcionario F 
+where C.CodCargo = F.CodCargo;
