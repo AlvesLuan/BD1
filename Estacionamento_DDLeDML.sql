@@ -116,3 +116,39 @@ where placa = 'JJJ-20201';
 select v.placa, v.cor
 from tb_veiculo as v, tb_estaciona as e
 where v.placa = e.tb_veiculo_placa and e.cod = 1;
+
+
+
+-- a. Qual a quantidade de clientes cadastrados.
+select count(*) from tb_Cliente;
+
+-- b. Existem quantos veículos cadastrados?
+select count(*) from tb_veiculo;
+
+-- c. Quantos modelos cadastrados existem?
+select count(*) from tb_modelo;
+
+-- d. Quantos pátios existem cadastrados?
+select count(*) from tb_patio;
+
+-- e. Qual a capacidade total dos estacionamentos?
+select sum(capacidade) as total_capacidade from tb_patio;
+
+-- f. Qual a média da capacidade dos estacionamentos?
+select avg(capacidade) as media_estaciona from tb_patio;
+
+-- g. Exiba a quantidade de vezes os veículos de cor Prata estacionaram.
+select count(*)
+from tb_veiculo as V, tb_estaciona as E
+where V.cor = "Prata" and V.placa = E.TB_Veiculo_placa;
+
+-- h. Mostre a cor e a quantidade de veículos por cor.
+select cor, count(*) from tb_veiculo group by cor;
+select cor, count(cor) from tb_veiculo group by cor;
+
+
+-- i. Mostre a cor e a quantidade de veículos por cor onde a cor seja prata.
+
+
+-- j. Mostre o código do modelo e a quantidade de modelos agrupados por código de modelo.
+
