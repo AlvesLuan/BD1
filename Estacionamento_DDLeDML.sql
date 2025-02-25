@@ -148,7 +148,7 @@ select cor, count(cor) from tb_veiculo group by cor;
 
 
 -- i. Mostre a cor e a quantidade de veículos por cor onde a cor seja prata.
-
+select cor, count(*) from tb_veiculo where cor = "Prata";
 
 -- j. Mostre o código do modelo e a quantidade de modelos agrupados por código de modelo.
 
