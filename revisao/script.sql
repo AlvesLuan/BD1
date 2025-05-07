@@ -37,6 +37,9 @@ create table if not exists historico_escolar(
     foreign key(idturma) references turma (idturma)
 );
 
-
+desc aluno;
+insert into aluno value ("Silva", "17", "1","Ciencia da Computação");
+insert into aluno value ("Braga", "8", "2","Ciencia da Computação");
+select * from aluno
 
 
