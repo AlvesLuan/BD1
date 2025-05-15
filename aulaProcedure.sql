@@ -146,3 +146,5 @@ begin
     SELECT STR;
 END $$
 DELIMITER ;
+
+call teste8();
