@@ -48,3 +48,17 @@ select @quantidade;
 
 SET @ti=1, @t2=2, @t3:=4;
 select @t1, @t2, @t3, @t4 := @t1+@t2+@t3;
+
+
+
+DELIMITER $$
+CREATE PROCEDURE teste4(inout numero INT)
+BEGIN
+	SET numero = numero * numero;
+    END $$
+DELIMITER ;
+
+SET @valor = 5;
+CALL teste4(@valor);
+SELECT @valor;
+
