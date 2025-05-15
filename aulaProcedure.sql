@@ -178,9 +178,10 @@ BEGIN
 		IF x > 0 THEN
 			LEAVE loop_label;
 		END IF;
-        SET str = concat(str, x, ',')
+        SET str = concat(str, x, ',');
         SET x = x + 1;
-        ITERATE loop_label
+        ITERATE loop_label;
 	END LOOP;
     select str;
+END $$
 DELIMITER ; 
