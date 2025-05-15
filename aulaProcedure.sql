@@ -140,7 +140,7 @@ begin
     declare x int DEFAULT 0;
     SET X = 1;
     WHILE x <= 5 DO
-		SET str = CONCAT(str, x, ' , ');
+		SET str = CONCAT(str, x, ',');
         SET x = x + 1;
 	END WHILE;
     SELECT STR;
@@ -148,3 +148,39 @@ END $$
 DELIMITER ;
 
 call teste8();
+
+
+DELIMITER $$
+Create procedure teste9()
+BEGIN
+	DECLARE str varchar(255) default ' ';
+    DECLARE x int default 0;
+    set x = 5;
+    repeat
+		SET str = concat(str, x, ',');
+        SET x = x -1;
+        UNTIL x <= 0
+	END REPEAT;
+    SELECT str;
+end $$
+DELIMITER ;
+
+call teste9();
+
+
+DELIMITER $$
+CREATE PROCEDURE teste10()
+BEGIN
+	declare str varchar(255) default ' ';
+    declare x int default 0;
+    set x =-5;
+    loop_label: loop
+		IF x > 0 THEN
+			LEAVE loop_label;
+		END IF;
+        SET str = concat(str, x, ',')
+        SET x = x + 1;
+        ITERATE loop_label
+	END LOOP;
+    select str;
+DELIMITER ; 
