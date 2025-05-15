@@ -185,3 +185,5 @@ BEGIN
     select str;
 END $$
 DELIMITER ; 
+
+call teste10();
