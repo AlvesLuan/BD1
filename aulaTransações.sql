@@ -34,4 +34,9 @@ DELIMITER ;
 
 update conta set saldo = saldo + 50 where id = 'A';
 CALL transferencia ('A', 'B', 30.00);
+
 SELECT * FROM conta;
+select @@autocommit;
+
+
+
